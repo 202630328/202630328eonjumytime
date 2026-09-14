@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘 저녁 뭐 먹지? | 저녁 메뉴 추천</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+        }
+
+        body {
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .result-box {
+            background-color: #f1f5f9;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .category {
+            font-size: 0.9rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .menu-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        button:hover {
+            background-color: #ff5252;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>오늘 저녁 뭐 먹지? 🍲</h1>
+        <p class="subtitle">결정이 어려울 땐 버튼을 눌러보세요!</p>
+
+        <div class="result-box" id="resultBox">
+            <div class="category" id="category">버튼을 눌러주세요</div>
+            <div class="menu-name" id="menuName">🤔</div>
+        </div>
+
+        <button onclick="recommendMenu()">메뉴 추천받기</button>
+    </div>
+
+    <script>
+        // 저녁 메뉴 데이터베이스
+        const menuList = [
+            { category: "한식", name: "김치찌개" },
+            { category: "한식", name: "된장찌개" },
+            { category: "한식", name: "제육볶음" },
+            { category: "한식", name: "삼겹살" },
+            { category: "한식", name: "비빔밥" },
+            { category: "중식", name: "짜장면" },
+            { category: "중식", name: "짬뽕" },
+            { category: "중식", name: "마라탕" },
+            { category: "중식", name: "탕수육" },
+            { category: "일식", name: "초밥" },
+            { category: "일식", name: "돈까스" },
+            { category: "일식", name: "라멘" },
+            { category: "일식", name: "연어덮밥" },
+            { category: "양식", name: "파스타" },
+            { category: "양식", name: "피자" },
+            { category: "양식", name: "수제버거" },
+            { category: "양식", name: "스테이크" },
+            { category: "분식/기타", name: "떡볶이" },
+            { category: "분식/기타", name: "치킨" },
+            { category: "분식/기타", name: "족발/보쌈" },
+            { category: "분식/기타", name: "쌀국수" }
+        ];
+
+        function recommendMenu() {
+            const categoryEl = document.getElementById('category');
+            const menuNameEl = document.getElementById('menuName');
+
+            // 버튼 클릭 시 추첨 애니메이션 효과 (랜덤 텍스트 빠르게 변경)
+            let counter = 0;
+            const interval = setInterval(() => {
+                const tempRandom = menuList[Math.floor(Math.random() * menuList.length)];
+                categoryEl.textContent = tempRandom.category;
+                menuNameEl.textContent = tempRandom.name;
+                counter++;
+
+                if (counter > 10) { // 10번 바뀐 후 정지
+                    clearInterval(interval);
+                    
+                    // 최종 선정
+                    const finalSelection = menuList[Math.floor(Math.random() * menuList.length)];
+                    categoryEl.textContent = `[${finalSelection.category}]`;
+                    menuNameEl.textContent = finalSelection.name;
+                }
+            }, 50); // 0.05초 간격으로 스롯 애니메이션
+        }
+    </script>
+
+</body>
+</html>
